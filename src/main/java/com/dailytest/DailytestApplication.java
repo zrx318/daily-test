@@ -24,4 +24,5 @@ public class DailytestApplication {
         System.out.println("hello world");
     }
 
+
 }
