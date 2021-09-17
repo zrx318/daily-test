@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty name="LogPath" source="log.path" defaultValue="log" />
+    <springProperty name="LogFile" source="log.file" defaultValue="daily-test-log" />
+    <springProperty name="LogLevel" source="log.level" defaultValue="INFO" />
+
+    <property name="LogPattern" value="%d [%-5level] %-28(%class{0}\\(%L\\)) : %msg%n" />
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>${LogPattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="LogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 正在记录的日志文档的路径及文档名 -->
+        <file>${LogPath}/${LogFile}.log</file>
+        <!--日志文档输出格式-->
+        <encoder>
+            <pattern>${LogPattern}</pattern>
+            <charset>UTF-8</charset> <!-- 设置字符集 -->
+        </encoder>
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志归档 -->
+            <fileNamePattern>${LogPath}/${LogFile}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--日志文档保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="${LogLevel}">
+        <appender-ref ref="LogFile" />
+    </root>
+    <logger name="org.springframework" level="ERROR" />
+    <logger name="io.netty" level="ERROR" />
+    <logger name="org.apache" level="ERROR" />
+    <logger name="com.tencent.polaris" level="ERROR" />
+</configuration>

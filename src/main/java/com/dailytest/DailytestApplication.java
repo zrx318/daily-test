@@ -14,8 +14,8 @@ import javax.sql.DataSource;
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 public class DailytestApplication {
 
-    @Bean(name = "TagInfoJdbcTemplate")
-    public JdbcTemplate tagInfoJdbcTemplate(@Qualifier("adminDataSource") DataSource dataSource) {
+    @Bean(name = "AdminJdbcTemplate")
+    public JdbcTemplate AdminJdbcTemplate(@Qualifier("adminDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
