@@ -1,0 +1,68 @@
+<body>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<div>
+    <label>插入</label>
+    <input name="wt1" id="wt1" type="text">
+    <input name="da1" id="da1" type="text">
+    <button type="submit" onclick="insertQuestion()">插入</button>
+</div>
+<div>
+    <label>搜索</label>
+    <input name="wt2" id="wt2" type="text">
+    <button type="submit" onclick="searchQuestion()" value="问题注入">搜索</button>
+</div>
+<div>
+    <form action="insert" method="post">
+        <input type="text" name="wt" placeholder="问题" />
+        <input type="text" name="da" placeholder="答案"/>
+        <input type="submit" value="问题注入" />
+    </form>
+</div>
+<div>
+    <p>问题：<span id="wt">---</span></p>
+    <p>答案：<span id="da">---</span></p>
+</div>
+<script>
+
+    function insertQuestion() {
+        var wt1 = document.getElementById("wt1")
+        var da1 = document.getElementById("da1")
+        $.ajax({
+            url: "http://localhost:80/insert",
+            method: "post",
+            data: {
+                wt: wt1,
+                da: da1
+            },
+            dataType: "json",
+            success: function (data) {
+
+                if (data.status == "success") {
+
+                    $("#wt").html(data.question.wt1);
+                    $("#da").html(data.question.da1);
+                }
+            },
+            error: function (data) {
+                alert("wrong");
+            }
+        });
+    }
+
+    function searchQuestion() {
+        $.ajax({
+            url: "select",
+            method: "get",
+            uccess: function (data) {
+
+                if (data.status == "success") {
+
+                    $("#wt").html(data.question.wt1);
+                    $("#da").html(data.question.da1);
+                }
+            },
+        });
+    }
+</script>
+</body>
+
