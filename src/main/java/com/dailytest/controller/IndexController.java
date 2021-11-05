@@ -53,6 +53,7 @@ public class IndexController {
         return result.toJSONString();
     }
 
+
     private List<UserInfo> getAllUserInfo() {
         List<UserInfo> userInfos = adminJdbcTemplate.query("select * from t_user", (resultSet, i) -> {
             UserInfo userInfo = new UserInfo();
